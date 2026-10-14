@@ -1,0 +1,24 @@
+.env
+
+# Datenbank-Volumes und Dumps
+mysql_data/
+db_data/
+*.sql.bak
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editoren / IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs und temporäre Dateien
+*.log
+*.tmp
+
+# PHP / Composer (falls später genutzt)
+vendor/
