@@ -39,7 +39,7 @@ $arzt = $stmt->fetchAll();
     <h1>Arzt:innen</h1>
 
     <p>
-        <a href="create.php">Neuer Arzt:in</a>
+        <a href="arzt_create.php">Neuer Arzt:in</a>
     </p>
 
     <form method="get">
@@ -88,13 +88,13 @@ $arzt = $stmt->fetchAll();
                 </td>
 
                 <td>
-                    <a href="edit.php?id=<?= urlencode((string)$a['id']) ?>">
+                    <a href="arzt_edit.php?id=<?= urlencode((string)$a['id']) ?>">
                         Bearbeiten
                     </a>
 
                     <form
                         method="post"
-                        action="delete.php"
+                        action="arzt_delete.php"
                         onsubmit="return confirm('Wirklich löschen?')"
                         style="display:inline;"
                     >
