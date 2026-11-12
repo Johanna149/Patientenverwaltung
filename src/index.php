@@ -37,6 +37,7 @@ $arzt = $stmt->fetchAll();
 <body>
 
     <h1>Arzt:innen</h1>
+    <a href="termine.php">Zur Terminverwaltung</a><!-- vorerst hier der Link zur Terminverwaltung, nur zu Testzwecken -->
 
     <p>
         <a href="arzt_create.php">Neuer Arzt:in</a>
