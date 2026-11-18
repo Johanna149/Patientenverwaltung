@@ -39,9 +39,17 @@ $arzt = $stmt->fetchAll();
     <h1>Arzt:innen</h1>
 
     <p>
+<<<<<<< Updated upstream
         <a href="arzt_create.php">Neuer Arzt:in</a>
     </p>
+=======
+        <a href="create.php">+ Neue:r Patient:in</a>
+        <br>
+        <a href="termin_anlegen.php">+ Termin anlegen</a></br>
+>>>>>>> Stashed changes
 
+    </p>
+    
     <form method="get">
         <input
             type="text"
