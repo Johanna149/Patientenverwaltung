@@ -60,3 +60,5 @@ $termine = $stmt->fetchAll();
         </tr>
     <?php endforeach; ?>
 </table>
+
+<a href="index.php">Zurück zur Startseite</a><br>

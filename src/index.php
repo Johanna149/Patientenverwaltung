@@ -1,28 +1,28 @@
-
 <?php
 
 require 'db.php';
 
-$suche = trim($_GET['q'] ?? '');
+// Patienten laden
+$patientSuche = trim($_GET['patient_q'] ?? '');
 
-if ($suche !== '') {
+if ($patientSuche !== '') {
     $stmt = $pdo->prepare(
-        'SELECT * FROM arzt
+        'SELECT * FROM patient
          WHERE vorname LIKE :q
             OR nachname LIKE :q
             OR CONCAT(vorname, " ", nachname) LIKE :q
-            OR fachrichtung LIKE :q
+            OR sv_nummer LIKE :q
          ORDER BY nachname, vorname'
     );
-
-    $stmt->execute(['q' => '%' . $suche . '%']);
+    $stmt->execute(['q' => '%' . $patientSuche . '%']);
 } else {
     $stmt = $pdo->query(
-        'SELECT * FROM arzt ORDER BY nachname, vorname'
+        'SELECT * FROM patient ORDER BY nachname, vorname'
     );
 }
 
-$arzt = $stmt->fetchAll();
+$patienten = $stmt->fetchAll();
+
 
 ?>
 
@@ -31,96 +31,67 @@ $arzt = $stmt->fetchAll();
 
 <head>
     <meta charset="UTF-8">
-    <title>Arzt:innen</title>
+    <title>Patienten- und Arztverwaltung</title>
 </head>
 
 <body>
 
-    <h1>Arzt:innen</h1>
-    <a href="termine.php">Zur Terminverwaltung</a><!-- vorerst hier der Link zur Terminverwaltung, nur zu Testzwecken -->
+    <h1>Patientenverwaltung</h1>
+
+    <h2>Patient:innen</h2>
 
     <p>
-        <a href="arzt_create.php">Neuer Arzt:in</a>
+        <a href="create.php">+ Neue:r Patient:in</a>
     </p>
 
     <form method="get">
         <input
             type="text"
-            name="q"
-            placeholder="Name oder Fachrichtung"
-            value="<?= htmlspecialchars($suche) ?>"
+            name="patient_q"
+            placeholder="Name oder SV-Nummer"
+            value="<?= htmlspecialchars($patientSuche) ?>"
         >
-        <button type="submit">Suchen</button>
-
-        <?php if ($suche !== ''): ?>
-            <a href="index.php">Zurücksetzen</a>
-        <?php endif; ?>
+        <button type="submit">Patienten suchen</button>
     </form>
 
-    <br>
-
     <table border="1" cellpadding="6">
-
         <tr>
-            <th>Titel</th>
-            <th>Vorname</th>
-            <th>Nachname</th>
-            <th>Fachrichtung</th>
+            <th>SV-Nummer</th>
+            <th>Name</th>
+            <th>Geburtsdatum</th>
+            <th>Telefon</th>
             <th>Aktionen</th>
         </tr>
 
-        <?php foreach ($arzt as $a): ?>
-
+        <?php foreach ($patienten as $p): ?>
             <tr>
+                <td><?= htmlspecialchars($p['sv_nummer']) ?></td>
+                <td><?= htmlspecialchars($p['nachname'] . ' ' . $p['vorname']) ?></td>
+                <td><?= htmlspecialchars(date('d.m.Y', strtotime($p['geburtsdatum']))) ?></td>
+                <td><?= htmlspecialchars($p['telefon'] ?? '') ?></td>
                 <td>
-                    <?= htmlspecialchars($a['titel'] ?? '') ?>
-                </td>
-
-                <td>
-                    <?= htmlspecialchars($a['vorname']) ?>
-                </td>
-
-                <td>
-                    <?= htmlspecialchars($a['nachname']) ?>
-                </td>
-
-                <td>
-                    <?= htmlspecialchars($a['fachrichtung']) ?>
-                </td>
-
-                <td>
-                    <a href="arzt_edit.php?id=<?= urlencode((string)$a['id']) ?>">
+                    <a href="edit.php?sv=<?= urlencode($p['sv_nummer']) ?>">
                         Bearbeiten
                     </a>
 
-                    <form
-                        method="post"
-                        action="arzt_delete.php"
-                        onsubmit="return confirm('Wirklich löschen?')"
-                        style="display:inline;"
-                    >
-                        <input
-                            type="hidden"
-                            name="id"
-                            value="<?= htmlspecialchars((string)$a['id']) ?>"
-                        >
-
-                        <button type="submit">
-                            Löschen
-                        </button>
+                    <form method="post" action="delete.php"
+                          onsubmit="return confirm('Wirklich löschen?')"
+                          style="display:inline;">
+                        <input type="hidden" name="sv_nummer"
+                               value="<?= htmlspecialchars($p['sv_nummer']) ?>">
+                        <button type="submit">Löschen</button>
                     </form>
                 </td>
             </tr>
-
         <?php endforeach; ?>
 
-        <?php if (!$arzt): ?>
-            <tr>
-                <td colspan="5">Keine Arzt:innen gefunden.</td>
-            </tr>
+        <?php if (!$patienten): ?>
+            <tr><td colspan="5">Keine Patient:innen gefunden.</td></tr>
         <?php endif; ?>
-
     </table>
+
+    <a href="termine.php">Terminverwaltung</a><br>
+    <a href="arzt_index.php">Ärzteverwaltung</a>
 
 </body>
 </html>

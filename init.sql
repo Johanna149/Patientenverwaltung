@@ -15,7 +15,6 @@ CREATE TABLE arzt (
     fachrichtung VARCHAR(100) NOT NULL
 );
 
-
 CREATE TABLE termin (
     id INT AUTO_INCREMENT PRIMARY KEY,
     datum DATE NOT NULL,

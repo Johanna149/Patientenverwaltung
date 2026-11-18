@@ -80,10 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><?= htmlspecialchars($fehler) ?></p>
 <?php endif; ?>
 
-<!--wenn ein Fehler ist, dann wird Fehlermeldung angezeigt-->
-<?php if ($fehler): ?>
-    <p><?= htmlspecialchars($fehler) ?></p>
-<?php endif; ?>
 
 <form method="POST">
 <!--Auswahlfeld für Patienten, die in der Datenbank gespeichert sind-->
