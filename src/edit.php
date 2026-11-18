@@ -27,7 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $geburtstag = trim($_POST['geburtsdatum'] ?? '');
     $telefon    = trim($_POST['telefon'] ?? '');
 
+<<<<<<< HEAD
     
+=======
+    // Serverseitige Validierung (F5)
+>>>>>>> origin/F1
     if ($vorname === '') {
         $fehler[] = 'Vorname ist ein Pflichtfeld.';
     }
