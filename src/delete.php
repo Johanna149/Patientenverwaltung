@@ -5,11 +5,11 @@ require 'db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt = $pdo->prepare(
-        'DELETE FROM schueler WHERE id = :id'
+        'DELETE FROM patient WHERE sv_nummer = :sv'
     );
 
     $stmt->execute([
-        'id' => $_POST['id']
+        'sv' => $_POST['sv_nummer']
     ]);
 }
 

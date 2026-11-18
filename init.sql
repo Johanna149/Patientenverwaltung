@@ -24,7 +24,7 @@ CREATE TABLE termin (
     arzt_id INT NOT NULL,
 
     FOREIGN KEY (patient_sv)
-        REFERENCES patient(sv_nummer),
+        REFERENCES patient(sv_nummer)ON DELETE CASCADE,
 
     FOREIGN KEY (arzt_id)
         REFERENCES arzt(id),
