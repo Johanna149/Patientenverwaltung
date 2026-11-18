@@ -1,3 +1,4 @@
+
 <?php
 
 require 'db.php';
@@ -36,45 +37,25 @@ $patienten = $stmt->fetchAll();
 
 <body>
 
-<<<<<<< HEAD
-    <h1>Arzt:innen</h1>
-
-    <p>
-<<<<<<< Updated upstream
-        <a href="arzt_create.php">Neuer Arzt:in</a>
-    </p>
-=======
-        <a href="create.php">+ Neue:r Patient:in</a>
-        <br>
-        <a href="termin_anlegen.php">+ Termin anlegen</a></br>
->>>>>>> Stashed changes
-
-    </p>
-    
-=======
     <h1>Patient:innen</h1>
 
     <p>
         <a href="create.php">+ Neue:r Patient:in</a>
+        <br>
+        <a href="termin_anlegen.php">+ Termin anlegen</a>
+        <br>
+        <a href="arzt_index.php">Zur Arztverwaltung</a>
     </p>
 
->>>>>>> origin/F1
     <form method="get">
         <input
             type="text"
             name="q"
-<<<<<<< HEAD
-            placeholder="Name oder Fachrichtung"
-            value="<?= htmlspecialchars($suche) ?>"
-        >
-        <button type="submit">Suchen</button>
-
-=======
             placeholder="Name oder SV-Nummer"
             value="<?= htmlspecialchars($suche) ?>"
         >
         <button type="submit">Suchen</button>
->>>>>>> origin/F1
+
         <?php if ($suche !== ''): ?>
             <a href="index.php">Zurücksetzen</a>
         <?php endif; ?>
@@ -85,36 +66,6 @@ $patienten = $stmt->fetchAll();
     <table border="1" cellpadding="6">
 
         <tr>
-<<<<<<< HEAD
-            <th>Titel</th>
-            <th>Vorname</th>
-            <th>Nachname</th>
-            <th>Fachrichtung</th>
-            <th>Aktionen</th>
-        </tr>
-
-        <?php foreach ($arzt as $a): ?>
-
-            <tr>
-                <td>
-                    <?= htmlspecialchars($a['titel'] ?? '') ?>
-                </td>
-
-                <td>
-                    <?= htmlspecialchars($a['vorname']) ?>
-                </td>
-
-                <td>
-                    <?= htmlspecialchars($a['nachname']) ?>
-                </td>
-
-                <td>
-                    <?= htmlspecialchars($a['fachrichtung']) ?>
-                </td>
-
-                <td>
-                    <a href="arzt_edit.php?id=<?= urlencode((string)$a['id']) ?>">
-=======
             <th>SV-Nummer</th>
             <th>Name</th>
             <th>Geburtsdatum</th>
@@ -145,64 +96,39 @@ $patienten = $stmt->fetchAll();
                 <td>
 
                     <a href="edit.php?sv=<?= urlencode($p['sv_nummer']) ?>">
->>>>>>> origin/F1
                         Bearbeiten
                     </a>
 
                     <form
                         method="post"
-<<<<<<< HEAD
-                        action="arzt_delete.php"
-=======
                         action="delete.php"
->>>>>>> origin/F1
                         onsubmit="return confirm('Wirklich löschen?')"
                         style="display:inline;"
                     >
                         <input
                             type="hidden"
-<<<<<<< HEAD
-                            name="id"
-                            value="<?= htmlspecialchars((string)$a['id']) ?>"
-=======
                             name="sv_nummer"
                             value="<?= htmlspecialchars($p['sv_nummer']) ?>"
->>>>>>> origin/F1
                         >
 
                         <button type="submit">
                             Löschen
                         </button>
                     </form>
-<<<<<<< HEAD
-                </td>
-=======
 
                 </td>
 
->>>>>>> origin/F1
             </tr>
 
         <?php endforeach; ?>
 
-<<<<<<< HEAD
-        <?php if (!$arzt): ?>
-            <tr>
-                <td colspan="5">Keine Arzt:innen gefunden.</td>
-=======
         <?php if (!$patienten): ?>
             <tr>
                 <td colspan="5">Keine Patient:innen gefunden.</td>
->>>>>>> origin/F1
             </tr>
         <?php endif; ?>
 
     </table>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-
-</html>
->>>>>>> origin/F1
