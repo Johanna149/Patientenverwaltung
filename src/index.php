@@ -1,37 +1,12 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/F1
 <?php
 
 require 'db.php';
 
-<<<<<<< HEAD
-=======
 // Suche per GET (F6): Name oder SV-Nummer
->>>>>>> origin/F1
 $suche = trim($_GET['q'] ?? '');
 
 if ($suche !== '') {
     $stmt = $pdo->prepare(
-<<<<<<< HEAD
-        'SELECT * FROM arzt
-         WHERE vorname LIKE :q
-            OR nachname LIKE :q
-            OR CONCAT(vorname, " ", nachname) LIKE :q
-            OR fachrichtung LIKE :q
-         ORDER BY nachname, vorname'
-    );
-
-    $stmt->execute(['q' => '%' . $suche . '%']);
-} else {
-    $stmt = $pdo->query(
-        'SELECT * FROM arzt ORDER BY nachname, vorname'
-    );
-}
-
-$arzt = $stmt->fetchAll();
-=======
         'SELECT * FROM patient
          WHERE vorname LIKE :q
             OR nachname LIKE :q
@@ -47,25 +22,16 @@ $arzt = $stmt->fetchAll();
 }
 
 $patienten = $stmt->fetchAll();
->>>>>>> origin/F1
 
 ?>
 
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Arzt:innen</title>
-=======
 <html lang="de" translate="no">
 
 <head>
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <title>Patient:innen</title>
->>>>>>> origin/F1
 </head>
 
 <body>
