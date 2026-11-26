@@ -1,7 +1,6 @@
-
 <?php
 
-require 'db.php';
+require_once 'patienten/db.php';
 
 // Suche per GET (F6): Name oder SV-Nummer
 $suche = trim($_GET['q'] ?? '');
@@ -40,11 +39,11 @@ $patienten = $stmt->fetchAll();
     <h1>Patient:innen</h1>
 
     <p>
-        <a href="create.php">+ Neue:r Patient:in</a>
+        <a href="patienten/create.php">+ Neue:r Patient:in</a>
         <br>
-        <a href="termin_anlegen.php">+ Termin anlegen</a>
+        <a href="termin/termin_anlegen.php">+ Termin anlegen</a>
         <br>
-        <a href="arzt_index.php">Zur Arztverwaltung</a>
+        <a href="aerzte/arzt_index.php">Zur Arztverwaltung</a>
     </p>
 
     <form method="get">
@@ -52,7 +51,7 @@ $patienten = $stmt->fetchAll();
             type="text"
             name="q"
             placeholder="Name oder SV-Nummer"
-            value="<?= htmlspecialchars($suche) ?>"
+            value="<?= htmlspecialchars($suche, ENT_QUOTES, 'UTF-8') ?>"
         >
         <button type="submit">Suchen</button>
 
@@ -78,37 +77,37 @@ $patienten = $stmt->fetchAll();
             <tr>
 
                 <td>
-                    <?= htmlspecialchars($p['sv_nummer']) ?>
+                    <?= htmlspecialchars($p['sv_nummer'], ENT_QUOTES, 'UTF-8') ?>
                 </td>
 
                 <td>
-                    <?= htmlspecialchars($p['nachname'] . ' ' . $p['vorname']) ?>
+                    <?= htmlspecialchars($p['nachname'] . ' ' . $p['vorname'], ENT_QUOTES, 'UTF-8') ?>
                 </td>
 
                 <td>
-                    <?= htmlspecialchars(date('d.m.Y', strtotime($p['geburtsdatum']))) ?>
+                    <?= htmlspecialchars(date('d.m.Y', strtotime($p['geburtsdatum'])), ENT_QUOTES, 'UTF-8') ?>
                 </td>
 
                 <td>
-                    <?= htmlspecialchars($p['telefon'] ?? '') ?>
+                    <?= htmlspecialchars($p['telefon'] ?? '', ENT_QUOTES, 'UTF-8') ?>
                 </td>
 
                 <td>
 
-                    <a href="edit.php?sv=<?= urlencode($p['sv_nummer']) ?>">
+                    <a href="patienten/edit.php?sv=<?= urlencode($p['sv_nummer']) ?>">
                         Bearbeiten
                     </a>
 
                     <form
                         method="post"
-                        action="delete.php"
+                        action="patienten/delete.php"
                         onsubmit="return confirm('Wirklich löschen?')"
                         style="display:inline;"
                     >
                         <input
                             type="hidden"
                             name="sv_nummer"
-                            value="<?= htmlspecialchars($p['sv_nummer']) ?>"
+                            value="<?= htmlspecialchars($p['sv_nummer'], ENT_QUOTES, 'UTF-8') ?>"
                         >
 
                         <button type="submit">

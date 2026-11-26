@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db.php';
+require_once __DIR__ . '/../patienten/db.php';
 
 // Ärzte laden
 $arztSuche = trim($_GET['arzt_q'] ?? '');
@@ -141,7 +141,7 @@ $aerzte = $stmt->fetchAll();
 
     <br><br>
 
-    <a href="index.php">Zurück zur Startseite</a>
+    <a href="../index.php">Zurück zur Startseite</a>
 
 </body>
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db.php';
+require_once __DIR__ . '/../patienten/db.php';
 
 // Ärzte aus der Datenbank laden
 $stmt = $pdo->query("
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['arzt_id'], $_GET['datum
 
     // Datum überprüfen
     elseif (
-        !preg_match('/^\d{4}-\d{2}-\d{2}$/', $datum) ||
+        !preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $datum) ||
         !checkdate(
             (int) substr($datum, 5, 2),
             (int) substr($datum, 8, 2),
@@ -182,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['arzt_id'], $_GET['datum
 
     <br>
 
-    <a href="index.php">Zurück zur Startseite</a>
+    <a href="../index.php">Zurück zur Startseite</a>
 
 </body>
 

@@ -1,8 +1,14 @@
 <?php
 
-require 'db.php';
+require_once __DIR__ . '/../patienten/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $id = $_POST['id'] ?? '';
+
+    if (!ctype_digit((string) $id) || (int) $id <= 0) {
+        die('Ungültige Arzt-ID.');
+    }
 
     try {
         $stmt = $pdo->prepare(
@@ -10,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
 
         $stmt->execute([
-            'id' => $_POST['id']
+            'id' => (int) $id
         ]);
 
     } catch (PDOException $e) {
@@ -18,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-header('Location: index.php');
+header('Location: arzt_index.php');
 exit;
+
 ?>

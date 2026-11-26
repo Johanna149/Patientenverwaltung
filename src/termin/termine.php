@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db.php'; // Datenbankverbindung
+require_once __DIR__ . '/../patienten/db.php'; // Datenbankverbindung
 // require_once bindet die Datenbank nur einmal ein
 
 // In $sql wird die SQL-Abfrage gespeichert
@@ -106,7 +106,7 @@ $termine = $stmt->fetchAll();
 
     <br>
 
-    <a href="index.php">Zurück zur Startseite</a>
+    <a href="../index.php">Zurück zur Startseite</a>
 
 </body>
 

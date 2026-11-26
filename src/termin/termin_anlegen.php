@@ -1,5 +1,6 @@
 <?php
-require_once 'db.php';
+
+require_once __DIR__ . '/../patienten/db.php';
 
 // Patienten aus der Datenbank laden
 $stmt = $pdo->query("
@@ -191,14 +192,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <title>Neuen Termin anlegen</title>
 </head>
+
 <body>
 
 <h1>Neuen Termin anlegen</h1>
@@ -250,12 +254,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Hier werden Datum, Startzeit und Grund für den Termin eingegeben -->
     <label>Datum:</label>
-    <input type="date" name="datum" value="<?= htmlspecialchars($datum ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+    <input
+        type="date"
+        name="datum"
+        value="<?= htmlspecialchars($datum ?? '', ENT_QUOTES, 'UTF-8') ?>"
+        required
+    >
 
     <br><br>
 
     <label>Startzeit:</label>
-    <input type="time" name="uhrzeit" value="<?= htmlspecialchars($uhrzeit ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+    <input
+        type="time"
+        name="uhrzeit"
+        value="<?= htmlspecialchars($uhrzeit ?? '', ENT_QUOTES, 'UTF-8') ?>"
+        required
+    >
 
     <br><br>
 

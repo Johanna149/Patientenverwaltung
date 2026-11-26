@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db.php';
+require_once __DIR__ . '/db.php';
 
 $fehler = '';
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Geburtsdatum überprüfen
     elseif (
-        !preg_match('/^\d{4}-\d{2}-\d{2}$/', $geburtsdatum) ||
+        !preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $geburtsdatum) ||
         !checkdate(
             (int) substr($geburtsdatum, 5, 2),
             (int) substr($geburtsdatum, 8, 2),
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'telefon' => $telefon !== '' ? $telefon : null,
             ]);
 
-            header('Location: index.php');
+            header('Location: ../index.php');
             exit;
         }
     }
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <button type="submit">Speichern</button>
 
-        <a href="index.php">Abbrechen</a>
+        <a href="../index.php">Abbrechen</a>
 
     </form>
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db.php';
+require_once __DIR__ . '/../patienten/db.php';
 
 // Arzt-ID aus GET oder POST übernehmen
 $id = $_GET['id'] ?? $_POST['id'] ?? '';

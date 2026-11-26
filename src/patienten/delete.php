@@ -1,6 +1,6 @@
 <?php
 
-require 'db.php';
+require_once __DIR__ . '/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 }
 
-header('Location: index.php');
+header('Location: ../index.php');
 exit;
 
 ?>
