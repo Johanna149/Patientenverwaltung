@@ -1,13 +1,16 @@
 <?php
 
-require 'db.php';
+require_once 'db.php';
 
+// Arzt-ID aus GET oder POST übernehmen
 $id = $_GET['id'] ?? $_POST['id'] ?? '';
 
-if (!ctype_digit((string)$id)) {
+// Arzt-ID überprüfen
+if (!ctype_digit((string) $id) || (int) $id <= 0) {
     die('Ungültige Arzt-ID.');
 }
 
+// Bestehenden Arzt laden
 $stmt = $pdo->prepare('SELECT * FROM arzt WHERE id = :id');
 $stmt->execute(['id' => $id]);
 $a = $stmt->fetch();
@@ -18,20 +21,21 @@ if (!$a) {
 
 $fehler = [];
 
-
-$titel = $a['titel'];
+// Bestehende Daten übernehmen
+$titel = $a['titel'] ?? '';
 $vorname = $a['vorname'];
 $nachname = $a['nachname'];
 $fachrichtung = $a['fachrichtung'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // Eingaben aus dem Formular übernehmen
     $titel = trim($_POST['titel'] ?? '');
     $vorname = trim($_POST['vorname'] ?? '');
     $nachname = trim($_POST['nachname'] ?? '');
     $fachrichtung = trim($_POST['fachrichtung'] ?? '');
 
-   
+    // Pflichtfelder überprüfen
     if ($vorname === '') {
         $fehler[] = 'Vorname ist ein Pflichtfeld.';
     }
@@ -40,12 +44,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fehler[] = 'Nachname ist ein Pflichtfeld.';
     }
 
-    
     if ($fachrichtung === '') {
         $fehler[] = 'Fachrichtung ist ein Pflichtfeld.';
     }
 
+    // Maximale Länge der Eingaben überprüfen
+    if (strlen($titel) > 30) {
+        $fehler[] = 'Der Titel darf maximal 30 Zeichen enthalten.';
+    }
+
+    if (strlen($vorname) > 50) {
+        $fehler[] = 'Der Vorname darf maximal 50 Zeichen enthalten.';
+    }
+
+    if (strlen($nachname) > 50) {
+        $fehler[] = 'Der Nachname darf maximal 50 Zeichen enthalten.';
+    }
+
+    if (strlen($fachrichtung) > 100) {
+        $fehler[] = 'Die Fachrichtung darf maximal 100 Zeichen enthalten.';
+    }
+
     if (!$fehler) {
+
+        // Arztdaten aktualisieren
         $stmt = $pdo->prepare(
             'UPDATE arzt
              SET titel = :titel,
@@ -56,17 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
 
         $stmt->execute([
-            'titel'        => $titel,
-            'vorname'      => $vorname,
-            'nachname'     => $nachname,
+            'titel' => $titel !== '' ? $titel : null,
+            'vorname' => $vorname,
+            'nachname' => $nachname,
             'fachrichtung' => $fachrichtung,
-            'id'           => $id
+            'id' => $id
         ]);
 
-        header('Location: index.php');
+        header('Location: arzt_index.php');
         exit;
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -91,12 +114,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form method="post">
-    <input type="hidden" name="id" value="<?= htmlspecialchars((string)$id) ?>">
+
+        <input
+            type="hidden"
+            name="id"
+            value="<?= htmlspecialchars((string) $id) ?>"
+        >
+
         <p>
             <label>Titel<br>
                 <input
                     type="text"
                     name="titel"
+                    maxlength="30"
                     value="<?= htmlspecialchars($titel) ?>"
                 >
             </label>
@@ -107,6 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input
                     type="text"
                     name="vorname"
+                    maxlength="50"
                     value="<?= htmlspecialchars($vorname) ?>"
                     required
                 >
@@ -118,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input
                     type="text"
                     name="nachname"
+                    maxlength="50"
                     value="<?= htmlspecialchars($nachname) ?>"
                     required
                 >
@@ -129,6 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input
                     type="text"
                     name="fachrichtung"
+                    maxlength="100"
                     value="<?= htmlspecialchars($fachrichtung) ?>"
                     required
                 >
@@ -136,10 +169,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
 
         <button type="submit">Aktualisieren</button>
-        <a href="index.php">Abbrechen</a>
+
+        <a href="arzt_index.php">Abbrechen</a>
 
     </form>
-    
 
 </body>
+
 </html>
